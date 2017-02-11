@@ -92,6 +92,9 @@ class LagouSpider(scrapy.Spider):
         if not descript:
             descript = response.xpath('//*[@class="job_bt"]/div/p/text()').extract()
 
+        if not descript:
+            descript = response.xpath('//*[@class="job_bt"]/div/p/strong/text()').extract()
+
         for x in range(len(descript)):
             tmp = tmp + descript[x]
             pass
