@@ -30,6 +30,20 @@ class RecruitDataPipeline(object):
             doc.date_updated = doc.date_created
 
         doc.descript = item['descript']
-        doc.format_data = str(item['format_data'])
+        doc.companySize = item['companySize']
+        doc.firstType = item['firstType']
+        doc.workYear = item['workYear']
+        doc.education = item['education']
+        doc.financeStage = item['financeStage']
+        doc.city = item['city']
+        doc.district = item['district']
+        doc.industryField = item['industryField']
+        doc.createTime = item['createTime']
+        doc.positionLables = item['positionLables']
+        doc.salary = item['salary']
+        doc.positionName = item['positionName']
+        doc.jobNature = item['jobNature']
+        doc.companyFullName = item['companyFullName']
+        doc.companyLabelList = item['companyLabelList']
         doc.save()
         return item
