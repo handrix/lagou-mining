@@ -5,6 +5,7 @@ import time
 import sys
 import urllib
 import json
+import types
 from scrapy.utils.project import get_project_settings
 from recruit_data.items import RecruitDataItem
 reload(sys)
@@ -110,11 +111,21 @@ class LagouSpider(scrapy.Spider):
         item['district'] = data.get('district')
         item['industryField'] = data.get('industryField')
         item['createTime'] = data.get('createTime')
+        if not data.get('positionLables'):
+            data['positionLables'] = ['暂无']
+        else:
+            if data.get('positionLables') is not types.ListType:
+                data['positionLables'] = list(data.get('positionLables'))
         item['positionLables'] = data.get('positionLables')
         item['salary'] = data.get('salary')
         item['positionName'] = data.get('positionName')
         item['jobNature'] = data.get('jobNature')
         item['companyFullName'] = data.get('companyFullName')
+        if not data.get('companyLabelList'):
+            data['companyLabelList'] = ['暂无']
+        else:
+            if data.get('companyLabelList') is not types.ListType:
+                data['companyLabelList'] = list(data.get('companyLabelList'))
         item['companyLabelList'] = data.get('companyLabelList')
         item['descript'] = tmp
         yield item

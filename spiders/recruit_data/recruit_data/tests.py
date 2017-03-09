@@ -12,7 +12,7 @@ class RecruiteSpiderTest(unittest.TestCase):
         pass
 
     def lagou_test(self):
-        os.system('{} crawl lagou -s DOWNLOAD_DELAY={}'.format(self.client, '1'))
+        os.system('{} crawl lagou -s DOWNLOAD_DELAY={}'.format(self.client, '5'))
         pass
 
 if __name__ == '__main__':
