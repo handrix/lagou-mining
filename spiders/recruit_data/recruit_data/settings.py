@@ -8,12 +8,15 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-
+import sys
 BOT_NAME = 'recruit_data'
 
 SPIDER_MODULES = ['recruit_data.spiders']
 NEWSPIDER_MODULE = 'recruit_data.spiders'
 
+EXTENSIONS = {
+    'vampire.extensions.VampireProxyExtension': 543,
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'recruit_data (+http://www.yourdomain.com)'
@@ -49,13 +52,20 @@ ROBOTSTXT_OBEY = True
 #SPIDER_MIDDLEWARES = {
 #    'recruit_data.middlewares.MyCustomSpiderMiddleware': 543,
 #}
-
+# SPIDER_MIDDLEWARES = {
+#     'vampire.middlewares.VampireHeaderMiddleware': 543,
+#     'vampire.middlewares.VampireProxyMiddleware': 543,
+# }
+VAMPIRE_PROXY_NODE = 'redis://127.0.0.1:6379/4'
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    # 'recruit_data.middlewares.MyCustomDownloaderMiddleware': 543,
     'scrapy.downloadermiddleware.useragent.UserAgentMiddleware': None,
     'recruit_data.random_useragent.RandomUserAgentMiddleware': 400,
+
+    # 'vampire.middlewares.VampireProxyMiddleware': 400,
+    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
 
 # Enable or disable extensions
@@ -66,9 +76,15 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'recruit_data.pipelines.RecruitDataPipeline': 300,
-}
+for argv in sys.argv:
+    if 'lagou' in argv:
+        ITEM_PIPELINES = {
+           'recruit_data.pipelines.RecruitDataPipeline': 300,
+        }
+    if 'amazon' in argv:
+        ITEM_PIPELINES = {
+           'recruit_data.pipelines.BookDataPipeline': 300,
+        }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -109,3 +125,4 @@ Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrom
 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.20 (KHTML, like Gecko) Chrome/19.0.1036.7 Safari/535.20
 Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52
 """
+VAMPIRE_PROXY_POOL = ['redis://127.0.0.1:6379/4']

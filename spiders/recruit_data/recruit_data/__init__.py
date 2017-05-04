@@ -29,3 +29,15 @@ class JobDocument(Document):
     date_created = DateTimeField()
     date_updated = DateTimeField()
     pass
+
+
+class BookDocument(Document):
+    url = URLField(verbose_name='抓取页URL', primary_key=True, required=True, help_text="索引")
+    title = StringField(verbose_name='抓取页标题', required=True, default='')
+    book_name = StringField(verbose_name='图书名', required=True, default='')
+    descript = StringField(verbose_name='描述', required=True, default='')
+    auth = StringField(verbose_name='作者', required=True, default='')
+    price = StringField(verbose_name='价格', required=True, default='')
+    date_created = DateTimeField()
+    date_updated = DateTimeField()
+    pass

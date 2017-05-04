@@ -15,5 +15,9 @@ class RecruiteSpiderTest(unittest.TestCase):
         os.system('{} crawl lagou -s DOWNLOAD_DELAY={}'.format(self.client, '5'))
         pass
 
+    def amazon_test(self):
+        os.system('{} crawl amazon -s DOWNLOAD_DELAY={}'.format(self.client, '5'))
+        pass
+
 if __name__ == '__main__':
     unittest.main()

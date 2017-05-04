@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import mongoengine
 from datetime import datetime
-from . import JobDocument
+from . import JobDocument, BookDocument
 
 
 class RecruitDataPipeline(object):
@@ -47,3 +47,33 @@ class RecruitDataPipeline(object):
         doc.companyLabelList = item['companyLabelList']
         doc.save()
         return item
+
+
+class BookDataPipeline(object):
+    client = None
+
+    def open_spider(self, spider):
+        self.client = mongoengine.connect('amazon_spiders', host='localhost')
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        url = item['url']
+        del item['url']
+
+        try:
+            doc = BookDocument.objects.get(pk=url)
+        except BookDocument.DoesNotExist:
+            doc = BookDocument(pk=url)
+            doc.date_created = datetime.now()
+            doc.date_updated = doc.date_created
+
+        doc.title = item['title']
+        doc.book_name = item['book_name']
+        doc.descript = item['descript']
+        doc.auth = item['auth']
+        doc.price = item['price']
+        doc.save()
+        return item
+    pass

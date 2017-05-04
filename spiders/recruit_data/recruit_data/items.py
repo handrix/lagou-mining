@@ -29,3 +29,13 @@ class RecruitDataItem(scrapy.Item):
     companyLabelList = scrapy.Field()
     descript = scrapy.Field()
     pass
+
+
+class BookDataItem(scrapy.Item):
+    url = scrapy.Field()
+    title = scrapy.Field()
+    book_name = scrapy.Field()
+    descript = scrapy.Field()
+    auth = scrapy.Field()
+    price = scrapy.Field()
+    pass
